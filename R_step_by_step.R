@@ -1,6 +1,6 @@
 #'---
 #' title: "TSCI 5050: Introduction to Data Science"
-#' author: 'Author One ^1^, Author Two ^1^'
+#' author: 'Ciera Price ^1^, Author Two ^1^'
 #' abstract: |
 #'  | Provide a summary of objectives, study design, setting, participants,
 #'  | sample size, predictors, outcome, statistical analysis, results,
@@ -20,12 +20,16 @@
 #' ---
 #'
 #+ init, echo=FALSE, message=FALSE, warning=FALSE
-# init ----
+# init ---- 
+# Note that four dashes creates a section break in the code. You can easily navigate
+# different sections of code with the drop down arrow in the bottom left corner.
 # This part does not show up in your rendered report, only in the script,
 # because we are using regular comments instead of #' comments
 debug <- 0;
 knitr::opts_chunk$set(echo=debug>-1, warning=debug>0, message=debug>0, class.output="scroll-20", attr.output='style="max-height: 150px; overflow-y: auto;"');
 
+# It is important to define your library to ensure that you have appropriate functionality
+# to execute your code. Essentially, you are loading only the necessary programs for your code.
 library(ggplot2); # visualisation
 library(GGally);
 library(rio);# simple command for importing and exporting
@@ -34,6 +38,7 @@ library(pander); # format tables
 library(broom); # allows to give clean dataset
 library(dplyr); #add dplyr library
 
+# Add functions once the library is defined.
 options(max.print=500);
 panderOptions('table.split.table',Inf); panderOptions('table.split.cells',Inf);
 whatisthis <- function(xx){
@@ -72,6 +77,10 @@ bar <- foo;
 #'
 #' ## Comments
 #'
+#' `#` This is an ordinary comment. Everything after it on the same line is not
+#' executed. You can use this type of comment to remind yourself (and others) of
+#' the code's purpose and potential errors.
+#' 
 #' `#'` This indicates that this line should be formatted as text. It must be
 #' the first two characters in that line in order to work.
 #'
@@ -79,9 +88,10 @@ bar <- foo;
 #' be treated as a "code chunk". I.e. the next lines (but not this one) will be
 #' run, the code will be displayed according to your settings and the results
 #' will be displayed according to your settings.
-#'
-#' `#` This is an ordinary comment. Everything after it on the same line is not
-#' executed.
+#' 
+#' `#'#` This is how to create headers. Additional #s will create subheaders. Use
+#' this type of comment to optimize formatting and readability.
+#' 
 #'
 #' # Functions and Data Types
 #'
