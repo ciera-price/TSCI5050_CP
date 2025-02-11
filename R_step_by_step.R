@@ -1,6 +1,6 @@
 #'---
 #' title: "TSCI 5050: Introduction to Data Science"
-#' author: 'Ciera Price ^1^, Author Two ^1^'
+#' author: 'Ciera Price ^1^
 #' abstract: |
 #'  | Provide a summary of objectives, study design, setting, participants,
 #'  | sample size, predictors, outcome, statistical analysis, results,
