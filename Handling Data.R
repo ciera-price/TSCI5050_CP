@@ -22,7 +22,7 @@
 #+ init, echo=FALSE, message=FALSE, warning=FALSE
 # init ---- 
 # 
-debug <- 0;nrows <-200;seed <-22;
+debug <- 0;nrows <-1000;seed <-22;
 
 knitr::opts_chunk$set(echo=debug>-1, warning=debug>0, message=debug>0, class.output="scroll-20", attr.output='style="max-height: 150px; overflow-y: auto;"');
 
@@ -36,7 +36,7 @@ library(dplyr); #add dplyr library
 
 options(max.print=500);
 panderOptions('table.split.table',Inf); panderOptions('table.split.cells',Inf);
-prob_missing=c(.99,.01)
+prob_missing=c(.99,.01) #The c function combines individual values into a vector.
 whatisthis <- function(xx){
   list(class=class(xx),info=c(mode=mode(xx),storage.mode=storage.mode(xx)
                               ,typeof=typeof(xx)))};
@@ -61,6 +61,9 @@ rnorm(nrows, mean=900, sd=250) #Create a single column vector of random values; 
     #In this case, if a value is numeric, then replace it with a random value with the given mean and sd
     #n() represents the number of rows in the current block of data
     #.x is a placeholder for the column name - this syntax only works within mutate, transmute, and summarize
+  #sprintf allows you to create a character vector that combines text and variable values
+    # s = string, d = integer, f = fraction
+    #EXAMPLE: sprintf("name = %s, age = %d, percentile = %f %%", "Ciera", 30, 98.5)
 
 Dat1 <- Dat0[rep(1,nrows),] %>% 
         mutate(across(where(is.numeric),~rnorm(n(), mean=.x, sd=1+.x/12))
@@ -70,6 +73,7 @@ Dat1 <- Dat0[rep(1,nrows),] %>%
               ,sample(1:100,n(),replace = TRUE)
               ,sample(1:1000,n(),replace = TRUE)
               ,sample(1:9,n(),replace = TRUE))
+        , IHG=sample(c("I","II","III","IV"),n(),replace = TRUE)
         , PIN = seq_len(n())
         , `CD4 ABS`=round(rnorm(n(), mean=900, sd=250))
         , `CD8 ABS`=round(rnorm(n(), mean=500, sd=20))
@@ -80,15 +84,14 @@ Dat1 <- Dat0[rep(1,nrows),] %>%
         , Date=as.Date(Date,"%m/%d/%Y")-sample(0:2,n(),replace=TRUE) 
         )
 
-#sprintf("name = %s, age = %d, percentile = %f %%", "Ciera", 30, 98.5)
-# s = string, d = integer, f = fraction
-
 #Generate a Date column
 #as.Date("11/30/2024","%m/%d/%Y") #Used to define format of date
 #class(as.Date("11/30/2024","%m/%d/%Y")) #What class of data is this? May use function to confirm that you've created a date.
 #is(as.Date("11/30/2024","%m/%d/%Y"),"Date") ## Alternatively, you can ask is argument X class Y? Returns TRUE or FALSE.
 #as.Date("11/30/2024","%m/%d/%Y")-sample(0:2,size=3)
 
+#The summarize func creates a single row of summary data for the given columns
+#If you group the data, then there is one row per combo of grouping variables
 SummaryDat1 <-summarize(group_by(Dat1,Date),`CD4 ABS`=mean(`CD4 ABS`),`CD8 ABS`=mean(`CD8 ABS`))
 
 #Write Data ----
