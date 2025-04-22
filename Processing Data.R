@@ -33,6 +33,7 @@ library(pander); # format tables
 #library(printr); # set limit on number of lines printed
 library(broom); # allows to give clean dataset
 library(dplyr); #add dplyr library
+library(DataExplorer);
 
 options(max.print=500);
 panderOptions('table.split.table',Inf); panderOptions('table.split.cells',Inf);
@@ -43,6 +44,11 @@ prob_missing=c(.99,.01) #The c function combines individual values into a vector
 datafile1 <- "Data/Simulated Data.xlsx"
 simdat <- import(datafile1) %>% mutate(train=sample(c(TRUE,FALSE),n(),replace = TRUE))
 #simdat <- mutate(simdat,train=sample(c(TRUE,FALSE),n(),replace = TRUE))
+
+#This allows us to count the number of unique values per variable and omit missing data
+sapply(simdat,function(xx){length(unique(na.omit(xx)))})
+select(simdat,!c("VISIT", "Notes","ID","Free Response"))%>% create_report(y=)
+
 
 #Scatter Plot Matrix ----
 select(simdat,!any_of(c("ID", "Specimen ID","PIN", "VISIT")))[,50:52] %>% ggpairs

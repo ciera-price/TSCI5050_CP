@@ -68,11 +68,16 @@ rnorm(nrows, mean=900, sd=250) #Create a single column vector of random values; 
 Dat1 <- Dat0[rep(1,nrows),] %>% 
         mutate(across(where(is.numeric),~rnorm(n(), mean=.x, sd=1+.x/12))
         , ID= sprintf("EX-%04d",sample(1:1000,n())) # Zero pad to 4 places with prefix 'EX-'
-        ,`Specimen ID`= sprintf("%03d-%03d-%04d-%d"#`These quotes are needed for variable names that include a space`
+        , `Specimen ID`= sprintf("%03d-%03d-%04d-%d"#`These quotes are needed for variable names that include a space`
               ,sample(1:100,n(), replace = TRUE)
               ,sample(1:100,n(),replace = TRUE)
               ,sample(1:1000,n(),replace = TRUE)
               ,sample(1:9,n(),replace = TRUE))
+        ,`Breast Cancer`=sample(0:1,n(),replace = TRUE)
+        , `Lung Cancer`=sample(0:1,n(),replace = TRUE)
+        , `Other Cancer`=sample(0:1,n(),replace = TRUE)
+        , `Not Cancer`=sample(0:1,n(),replace = TRUE)
+        , `Free Response`= replicate(n(),paste0(sample(c(letters, LETTERS, 0:9, ' '),sample(5:20,1),replace=TRUE),collapse = ''))
         , IHG=sample(c("I","II","III","IV"),n(),replace = TRUE)
         , PIN = seq_len(n())
         , `CD4 ABS`=round(rnorm(n(), mean=900, sd=250))
